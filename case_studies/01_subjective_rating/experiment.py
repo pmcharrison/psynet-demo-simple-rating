@@ -1,136 +1,138 @@
+from pathlib import Path
+import random
 import psynet.experiment
 from psynet.asset import asset  # noqa
-from psynet.bot import Bot
 from psynet.modular_page import (
-    AudioMeterControl,
     AudioPrompt,
-    AudioRecordControl,
     ModularPage,
+    SurveyJSControl,
 )
-from psynet.page import InfoPage, VolumeCalibration
-from psynet.timeline import Event, ProgressDisplay, ProgressStage, Timeline
+from psynet.page import InfoPage
+from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
-from .custom_synth import synth_prosody
-
-##########################################################################################
-# Stimuli
-##########################################################################################
+# TODO: Basic data preview -- make a good default from PsyNet?
+# TODO: Fix linter errors
 
 
-def synth_stimulus(path, frequencies):
-    synth_prosody(vector=frequencies, output_path=path)
-
-
-nodes = [
-    StaticNode(
-        definition={
-            "frequency_gradient": frequency_gradient,
-            "start_frequency": start_frequency,
-            "frequencies": [start_frequency + i * frequency_gradient for i in range(5)],
-        },
-        assets={
-            "stimulus": asset(
-                synth_stimulus,
-                extension=".wav",
-                on_demand=True,
-            )
-        },
-    )
-    for frequency_gradient in [-100, 0, 100]
-    for start_frequency in [-100, 0, 100]
+# TODO: Wrap in Python classes
+RATING_SCALES= [
+    {
+        "name": "brightness",
+        "min": 0,
+        "max": 5,
+        "min_description": "Dark",
+        "max_description": "Bright",
+    },
+    {
+        "name": "roughness",
+        "min": 0,
+        "max": 5,
+        "min_description": "Smooth",
+        "max_description": "Rough",
+    },
 ]
+
+# TODO: Good way to avoid hardcoding?
+N_TRIALS_PER_PARTICIPANT = 6  # <- set to correspond to the number of stimuli
+
+def list_stimuli():
+    stimulus_dir = Path(__file__).parent.parent / "resources" / "instrument_sounds"
+    return [
+        {
+            "name": path.stem,
+            "path": path,
+        }
+        for path in list(stimulus_dir.glob("*.mp3"))
+    ]
+
+# Run `python3 experiment.py` to list the stimuli.
+if __name__ == "__main__":
+    stimuli = list_stimuli()
+    print(f"Found {len(stimuli)} stimuli:")
+    for stimulus in stimuli:
+        print(f"- {stimulus['name']}")
+
+
+def get_nodes():
+    return [
+        StaticNode(
+            definition={
+                "stimulus_name": stimulus["name"]
+            },
+            assets={
+                "stimulus_audio": asset(
+                    stimulus["path"],
+                    extension=".mp3",
+                    cache=True,  # reuse the uploaded file between deployments
+                )
+            },
+        )
+        for stimulus in list_stimuli()
+    ]
 
 
 class CustomTrial(StaticTrial):
-    _time_trial = 3
-    _time_feedback = 2
-
-    time_estimate = _time_trial + _time_feedback
-    wait_for_feedback = True
+    time_estimate = 10
 
     def show_trial(self, experiment, participant):
-        stimulus_duration = 0.393
-        record_duration = 2.0
-
         return ModularPage(
-            "imitation",
+            "ratings",
             AudioPrompt(
-                self.assets["stimulus"],
-                "Please imitate the spoken word as closely as possible.",
+                self.assets["stimulus_audio"],
+                "Please rate the sound. You can replay it as many times as you like.",
+                controls={"Play from start": "Replay"}
             ),
-            AudioRecordControl(
-                duration=record_duration,
-                bot_response_media="example-bier.wav",
-                auto_advance=True,
+            SurveyJSControl(
+                # See https://surveyjs.io/create-free-survey
+                {
+                    "elements": [
+                        {
+                            "type": "rating",
+                            "name": scale["name"],
+                            "title": scale["name"].capitalize(),
+                            "isRequired": True,
+                            "minRateDescription": scale["min_description"],
+                            "maxRateDescription": scale["max_description"],
+                            "rateMin": scale["min"],
+                            "rateMax": scale["max"],
+                        }
+                        for scale in RATING_SCALES
+                    ]
+                },
+                bot_response={
+                    scale["name"]: random.choice(range(scale["min"], scale["max"] + 1))
+                    for scale in RATING_SCALES
+                },
             ),
-            time_estimate=self._time_trial,
-            start_trial_automatically=False,
-            show_start_button=True,
-            show_next_button=False,
-            progress_display=ProgressDisplay(
-                stages=[
-                    ProgressStage([0.0, stimulus_duration], color="grey"),
-                    ProgressStage(
-                        [stimulus_duration, stimulus_duration + record_duration],
-                        caption="Recording...",
-                        color="red",
-                    ),
-                    ProgressStage(
-                        [
-                            stimulus_duration + record_duration,
-                            stimulus_duration + record_duration + stimulus_duration,
-                        ],
-                        caption="Uploading, please wait...",
-                        color="grey",
-                    ),
-                ],
-            ),
-            events={"recordStart": Event(is_triggered_by="promptEnd")},
+            events={
+                "submitEnable": Event(is_triggered_by="promptEnd"),
+            },
+            time_estimate=10,
         )
-
-    def show_feedback(self, experiment, participant):
-        return ModularPage(
-            "feedback",
-            AudioPrompt(
-                self.assets["imitation"],
-                "Listen back to your recording. Did you do a good job?",
-            ),
-            time_estimate=self._time_feedback,
-        )
-
 
 class Exp(psynet.experiment.Experiment):
-    label = "Static audio demo"
+    label = "Subjective rating"
 
     timeline = Timeline(
-        VolumeCalibration(),
-        ModularPage(
-            "record_calibrate",
-            """
-            Please speak into your microphone and check that the sound is registered
-            properly. If the sound is too quiet, try moving your microphone
-            closer or increasing the input volume on your computer.
-            """,
-            AudioMeterControl(),
-            time_estimate=5,
-        ),
+        # VolumeCalibration(),
         InfoPage(
             """
-            In this experiment you will hear some words. Your task will be to repeat
-            them back as accurately as possible.
+            In this experiment you will hear some sounds. Your task will be to rate
+            them on a scale of 1 to 5 on several scales.
             """,
             time_estimate=5,
         ),
         StaticTrialMaker(
-            id_="static_audio",
+            id_="ratings",
             trial_class=CustomTrial,
-            nodes=nodes,
-            expected_trials_per_participant=len(nodes),
-            target_n_participants=3,
-            recruit_mode="n_participants",
+            nodes=get_nodes,
+            expected_trials_per_participant=N_TRIALS_PER_PARTICIPANT,
+        ),
+        InfoPage(
+            """
+            Thank you for your participation!
+            """,
+            time_estimate=5,
         ),
     )
-
-    def test_check_bot(self, bot: Bot, **kwargs):
-        assert len(bot.alive_trials) == len(nodes)
