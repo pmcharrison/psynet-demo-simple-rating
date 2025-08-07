@@ -1,3 +1,7 @@
-psynet@git+https://gitlab.com/PsyNetDev/PsyNet@rating-scales#egg=psynet
+# This temporary branch includes some WIP features that haven't been released yet.
+psynet@git+https://gitlab.com/PsyNetDev/PsyNet@ismir-2025#egg=psynet
+
+# TODO: do we need to specify a Dallinger development version too?
+
 repp@git+https://gitlab.com/computational-audition/repp@master#egg=repp
 matplotlib
