@@ -1,7 +1,4 @@
-// There is a bug in GitHub Codespace that triggers the Git 'unsafe repository' error,
-// due to a issue with how ownership is handled in the Codespace environment.
-// We disable this check with the following command.
-git config --global --add safe.directory '*'
+// This code runs when the user attaches to the development container.
 
 // This code creates a symbolic link from the working directory to the user directory.
 // Users can update values in the visible .dallingerconfig file and they will be automatically loaded by experiments.
