@@ -1,3 +1,16 @@
+// There is a bug in GitHub Codespace that triggers the Git 'unsafe repository' error,
+// due to a issue with how ownership is handled in the Codespace environment.
+// We disable this check with the following command.
+git config --global --add safe.directory '*'
+
+// This code creates a symbolic link from the working directory to the user directory.
+// Users can update values in the visible .dallingerconfig file and they will be automatically loaded by experiments.
+// They must make sure not to delete it, though.
+rm /root/.dallingerconfig || true
+ln -s /workspaces/${RepositoryName}/.dallingerconfig /root/.dallingerconfig
+
+
+// The following code launches the Redis and Postgres services in Docker containers.
 echo "Preparing services:"
 
 docker start redis || true
@@ -22,8 +35,3 @@ docker run -d --name postgres \
 fi
 
 echo "...complete."
-
-git config --global --add safe.directory /workspaces/psynet-workshop-ismir-2025/case_studies/01_subjective_rating
-
-rm /root/.dallingerconfig || true
-ln -s /workspaces/${RepositoryName}/.dallingerconfig /root/.dallingerconfig
