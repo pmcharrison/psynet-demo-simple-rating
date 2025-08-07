@@ -18,11 +18,11 @@ from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
 
 # Essential:
-# TODO: Make AudioContext requesting less intrusive when it needs to happen (e.g. play button)
-# TODO: Streamline Docker workflow
-#       - Use uv base image
-#       - Automatically open the experiment in the browser
+# TODO: Finding assets when running in Docker
+# TODO: Automatically opening the browser when running in Docker
 # Nice to have:
+# TODO: Lighter Dockerfile (e.g. use uv base image)
+# TODO: Make AudioContext requesting less intrusive when it needs to happen (e.g. play button)
 # TODO: Reordering experiment.py so that the Experiment class comes first
 #       (need to implement get_timeline)
 # TODO: Better default text for audio replay button
