@@ -15,8 +15,10 @@ ENV DALLINGER_NO_EGG_BUILD=1
 # verify_psynet_requirement() from check_constraints. For now, though it is still necessary,
 # because the Docker image being used for this step lags behind the latest version of PsyNet.
 
-# If you see an error here, you probably need to run `bash docker/generate-constraints` and then try again.
-RUN SKIP_CHECK_PSYNET_VERSION_REQUIREMENT=1 psynet check-constraints
+# # Have commented out this check because it's awkward for users to respond to this when it happens
+# # during the devcontainers build process.
+# # If you see an error here, you probably need to run `bash docker/generate-constraints` and then try again.
+# RUN SKIP_CHECK_PSYNET_VERSION_REQUIREMENT=1 psynet check-constraints
 
 # Uninstall PsyNet and Dallinger because otherwise we can run into edge cases where pip decides
 # that Dallinger/PsyNet doesn't need upgrading and then the editable version is left in place.
