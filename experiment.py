@@ -16,11 +16,9 @@ from psynet.page import InfoPage
 from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
-
-# Essential:
-# TODO: Finding assets when running in Docker
-# TODO: Automatically opening the browser when running in Docker
-# Nice to have:
+# TODO: Put assets in assets/ instead of data/ (would need to update exclusion_policy in Dallinger)
+# TODO: Don't create source_code.zip with psynet debug local
+# TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
 # TODO: Lighter Dockerfile (e.g. use uv base image)
 # TODO: Make AudioContext requesting less intrusive when it needs to happen (e.g. play button)
 # TODO: Reordering experiment.py so that the Experiment class comes first
