@@ -40,7 +40,7 @@ from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 N_TRIALS_PER_PARTICIPANT = 6
 
 def list_stimuli():
-    stimulus_dir = Path(__file__).parent.parent / "resources" / "instrument_sounds"
+    stimulus_dir = Path("instrument_sounds")
     return [
         {
             "name": path.stem,
