@@ -4,7 +4,7 @@
 // Users can update values in the visible .dallingerconfig file and they will be automatically loaded by experiments.
 // They must make sure not to delete it, though.
 rm /root/.dallingerconfig || true
-ln -s /workspaces/${RepositoryName}/.dallingerconfig /root/.dallingerconfig
+ln -s /workspaces/${RepositoryName}/.devcontainer/.dallingerconfig /root/.dallingerconfig
 
 
 // The following code launches the Redis and Postgres services in Docker containers.

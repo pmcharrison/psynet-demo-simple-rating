@@ -16,16 +16,17 @@ from psynet.page import InfoPage
 from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
-# TODO: Put assets in assets/ instead of data/ (would need to update exclusion_policy in Dallinger)
+# TODO: don't show this: The current installed version of Dallinger (11.4.0) is not the one recommended for this version of PsyNet
+# TODO: README plus instructions for starting in Codespaces
 # TODO: Don't create source_code.zip with psynet debug local
 # TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
-# TODO: Lighter Dockerfile (e.g. use uv base image)
-# TODO: Make AudioContext requesting less intrusive when it needs to happen (e.g. play button)
 # TODO: Reordering experiment.py so that the Experiment class comes first
 #       (need to implement get_timeline)
+# TODO: Lighter Dockerfile (e.g. use uv base image)
+# TODO: Put assets in assets/ instead of data/ (would need to update exclusion_policy in Dallinger)
+# TODO: Make AudioContext requesting less intrusive when it needs to happen (e.g. play button)
 # TODO: Better default text for audio replay button
 # TODO: Automatically waiting for the audio to complete before allowing submission
-# TODO: Fix linter errors
 # TODO: Estimating N_TRIALS_PER_PARTICIPANT automatically from the nodes list
 # TODO: Automatically set cache=True for all assets that are available on deployment
 # TODO: Useful error messages if you put your assets in bad place
