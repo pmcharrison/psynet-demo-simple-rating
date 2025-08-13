@@ -1,8 +1,9 @@
 # This temporary branch includes some WIP features that haven't been released yet.
 # Should be the latest commit on the ismir-2025 branch
-psynet@git+https://gitlab.com/PsyNetDev/PsyNet@ddbde70c16d0e64112a8ecc7250cdbecc17778f5#egg=psynet
+psynet@git+https://gitlab.com/PsyNetDev/PsyNet@b502f46e50c90234bd71e615e06d1949853aa6d3#egg=psynet
+dallinger@git+https://github.com/Dallinger/Dallinger@customize-index#egg=dallinger
 
 # TODO: do we need to specify a Dallinger development version too?
 
-repp@git+https://gitlab.com/computational-audition/repp@master#egg=repp
-matplotlib
+# repp@git+https://gitlab.com/computational-audition/repp@master#egg=repp
+# matplotlib

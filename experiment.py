@@ -16,7 +16,8 @@ from psynet.page import InfoPage
 from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
-# TODO: README plus instructions for starting in Codespaces
+# TODO: Better UI for creating a new participant tab via `psynet debug local`. Maybe just open the window automatically?
+# TODO: General dashboard cleaning
 # TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
 # TODO: Reordering experiment.py so that the Experiment class comes first
 #       (need to implement get_timeline)
