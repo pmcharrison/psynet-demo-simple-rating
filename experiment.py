@@ -17,7 +17,6 @@ from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
 # TODO: README plus instructions for starting in Codespaces
-# TODO: Don't create source_code.zip with psynet debug local
 # TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
 # TODO: Reordering experiment.py so that the Experiment class comes first
 #       (need to implement get_timeline)
