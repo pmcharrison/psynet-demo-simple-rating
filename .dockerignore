@@ -1,0 +1,4 @@
+# Specifying files here means that they will be not included in the 
+# deployed Docker image.
+
+data/
