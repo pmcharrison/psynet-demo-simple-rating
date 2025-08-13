@@ -16,7 +16,6 @@ from psynet.page import InfoPage
 from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
-# TODO: don't show this: The current installed version of Dallinger (11.4.0) is not the one recommended for this version of PsyNet
 # TODO: README plus instructions for starting in Codespaces
 # TODO: Don't create source_code.zip with psynet debug local
 # TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
@@ -39,7 +38,7 @@ from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 N_TRIALS_PER_PARTICIPANT = 6
 
 def list_stimuli():
-    stimulus_dir = Path("instrument_sounds")
+    stimulus_dir = Path("data/instrument_sounds")
     return [
         {
             "name": path.stem,

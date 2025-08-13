@@ -1,5 +1,6 @@
 # This temporary branch includes some WIP features that haven't been released yet.
-psynet@git+https://gitlab.com/PsyNetDev/PsyNet@ismir-2025#egg=psynet
+# Should be the latest commit on the ismir-2025 branch
+psynet@git+https://gitlab.com/PsyNetDev/PsyNet@8ac02fa047c28a878d37520826236e1372359978#egg=psynet
 
 # TODO: do we need to specify a Dallinger development version too?
 
