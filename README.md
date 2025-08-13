@@ -22,7 +22,7 @@ psynet debug local
 ```
 
 Wait a moment, and then a browser window should open containing a link to the dashboard.
-Click it, then enter 'admin' as the username as password, then press OK.
+Click it, then enter 'admin' as both username and password, then press OK.
 You'll now see the experiment dashboard.
 Click 'Development', then 'New participant', to create a link to try the experiment 
 as a participant.
