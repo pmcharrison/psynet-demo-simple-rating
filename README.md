@@ -40,8 +40,14 @@ with Devcontainers support (e.g. VSCode, Cursor).
 
 ### Locally in a virtual environment
 
-If you don't want to use Docker, then you can instead run this demo locally in a virtual environment.
+A more conventional approach is to instead run this demo locally in a virtual environment.
 This is more involved as you have to install several related dependencies like Redis and PostgreSQL.
 To do so, navigate to the [PsyNet website](https://psynet.dev) and follow the 'virtual environment'
 installation instructions. We recommend using Python 3.12.10 for this (or double-check the recommended
 version of Python specified in the `pyproject.toml` file in the PsyNet source directory).
+
+### Other options
+
+It should also be possible to load this repository using Devcontainers in an IDE such as VSCode.
+In theory, this should function equivalently to GitHub Codespaces. However, this hasn't worked
+so reliably for us yet, and we're still figuring out how to make it work better.
