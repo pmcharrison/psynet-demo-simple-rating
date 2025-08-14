@@ -29,15 +29,6 @@ You'll now see the experiment dashboard.
 Click 'Development', then 'New participant', to create a link to try the experiment
 as a participant.
 
-### Devcontainer in VSCode/Cursor
-
-It is possible to spin up a similar development locally if you are using an IDE
-with Devcontainers support (e.g. VSCode, Cursor).
-
-1. Download the repository to your local machine using `git clone`.
-2. Open the repository in your IDE.
-3. Accept the prompt that asks whether you want to open the repository in Devcontainers.
-
 ### Locally in a virtual environment
 
 A more conventional approach is to instead run this demo locally in a virtual environment.
