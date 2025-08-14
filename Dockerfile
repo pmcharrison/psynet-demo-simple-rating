@@ -25,7 +25,11 @@ ENV DALLINGER_NO_EGG_BUILD=1
 RUN python3 -m pip uninstall -y psynet
 RUN python3 -m pip uninstall -y dallinger
 
-RUN python3 -m pip install -r constraints.txt
+RUN if [ -f constraints.txt ]; then \
+        python3 -m pip install -r constraints.txt; \
+    else \
+        python3 -m pip install -r requirements.txt; \
+    fi
 
 COPY *prepare_docker_image.sh prepare_docker_image.sh
 RUN if test -f prepare_docker_image.sh ; then bash prepare_docker_image.sh ; fi
