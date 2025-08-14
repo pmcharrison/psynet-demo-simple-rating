@@ -54,7 +54,7 @@ if __name__ == "__main__":
     print(f"Found {len(stimuli)} stimuli:")
     for stimulus in stimuli:
         print(f"- {stimulus['name']}")
-
+        
 
 def get_nodes():
     return [
