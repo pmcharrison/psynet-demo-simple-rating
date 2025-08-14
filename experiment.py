@@ -17,6 +17,7 @@ from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
 # TODO: Better UI for creating a new participant tab via `psynet debug local`. Maybe just open the window automatically?
+# TODO: Throw an error if people try to provide assets to trialmaker nodes without a lambda function
 # TODO: General dashboard cleaning
 # TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
 # TODO: Reordering experiment.py so that the Experiment class comes first
