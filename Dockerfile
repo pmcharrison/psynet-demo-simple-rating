@@ -1,3 +1,6 @@
+# This Dockerfile is used both to specify a functional development environment 
+# (e.g. on GitHub Codespaces) and a deployment image.
+
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm
 
 # Heroku CLI is currently needed to run `psynet test local`, this should change soon
