@@ -16,19 +16,14 @@ from psynet.page import InfoPage
 from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
-# TODO: Better UI for creating a new participant tab via `psynet debug local`. Maybe just open the window automatically?
-# TODO: Throw an error if people try to provide assets to trialmaker nodes without a lambda function
 # TODO: General dashboard cleaning
-# TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
 # TODO: Reordering experiment.py so that the Experiment class comes first
-#       (need to implement get_timeline)
 # TODO: Lighter Dockerfile (e.g. use uv base image)
-# TODO: Put assets in assets/ instead of data/ (would need to update exclusion_policy in Dallinger)
 # TODO: Make AudioContext requesting less intrusive when it needs to happen (e.g. play button)
 # TODO: Better default text for audio replay button
 # TODO: Automatically waiting for the audio to complete before allowing submission
-# TODO: Estimating N_TRIALS_PER_PARTICIPANT automatically from the nodes list
 # TODO: Automatically set cache=True for all assets that are available on deployment
+# TODO: Don't create static folder with psynet debug local (maybe revisit calling of _create_symlink)
 # TODO: Useful error messages if you put your assets in bad place
 # TODO: Better 'reward' footer UI
 # TODO: Replace list_stimuli with `psynet info` command,
@@ -38,23 +33,6 @@ from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
 N_TRIALS_PER_PARTICIPANT = 6
 
-def list_stimuli():
-    stimulus_dir = Path("data/instrument_sounds")
-    return [
-        {
-            "name": path.stem,
-            "path": path,
-        }
-        for path in list(stimulus_dir.glob("*.mp3"))
-    ]
-
-# Run `python3 experiment.py` to list the stimuli.
-if __name__ == "__main__":
-    stimuli = list_stimuli()
-    print(f"Found {len(stimuli)} stimuli:")
-    for stimulus in stimuli:
-        print(f"- {stimulus['name']}")
-        
 
 def get_nodes():
     return [
@@ -72,6 +50,23 @@ def get_nodes():
         )
         for stimulus in list_stimuli()
     ]
+
+def list_stimuli():
+    stimulus_dir = Path("data/instrument_sounds")
+    return [
+        {
+            "name": path.stem,
+            "path": path,
+        }
+        for path in list(stimulus_dir.glob("*.mp3"))
+    ]
+
+# Run `python3 experiment.py` to list the stimuli.
+if __name__ == "__main__":
+    stimuli = list_stimuli()
+    print(f"Found {len(stimuli)} stimuli:")
+    for stimulus in stimuli:
+        print(f"- {stimulus['name']}")
 
 
 class CustomTrial(StaticTrial):
