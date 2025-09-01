@@ -1,7 +1,9 @@
 # This Dockerfile is used both to specify a functional development environment 
 # (e.g. on GitHub Codespaces) and a deployment image.
 
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm
+FROM python:3.12-bookworm
+
+RUN pip install uv
 
 # Heroku CLI is currently needed to run `psynet test local`, this should change soon
 RUN curl https://cli-assets.heroku.com/install.sh | sh
