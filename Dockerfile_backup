@@ -1,7 +1,6 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm
+# syntax = docker/dockerfile:1.2
 
-# Heroku CLI is currently needed to run `psynet test local`, this should change soon
-RUN curl https://cli-assets.heroku.com/install.sh | sh
+FROM registry.gitlab.com/psynetdev/psynet:v12.1.0
 
 RUN mkdir /experiment
 WORKDIR /experiment
@@ -21,10 +20,15 @@ ENV DALLINGER_NO_EGG_BUILD=1
 # # If you see an error here, you probably need to run `bash docker/generate-constraints` and then try again.
 # RUN SKIP_CHECK_PSYNET_VERSION_REQUIREMENT=1 psynet check-constraints
 
+# Uninstall PsyNet and Dallinger because otherwise we can run into edge cases where pip decides
+# that Dallinger/PsyNet doesn't need upgrading and then the editable version is left in place.
+RUN python3 -m pip uninstall -y psynet
+RUN python3 -m pip uninstall -y dallinger
+
 RUN if [ -f constraints.txt ]; then \
-        uv pip install -r constraints.txt --system; \
+        python3 -m pip install -r constraints.txt; \
     else \
-        uv pip install -r requirements.txt --system; \
+        python3 -m pip install -r requirements.txt; \
     fi
 
 COPY *prepare_docker_image.sh prepare_docker_image.sh
