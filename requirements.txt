@@ -1,13 +1,14 @@
-# This temporary branch includes some WIP features that haven't been released yet.
-# Should be the latest commit on the ismir-2025 branch.
+# We're currently pinning to a recent commit on the PsyNet master branch.
+# Ideally we'd pin to a release version soon.
 # Note: it's dangerous to specify the branch name directly, as it may confuse the Docker cache.
 # If you want to update your repository to use the latest version of this branch:
-# 1. Go to https://gitlab.com/PsyNetDev/PsyNet/-/merge_requests/856
-# 2. Copy the latest commit hash, and paste it below after `PsyNet@`
+# 1. Go to https://gitlab.com/PsyNetDev/PsyNet
+# 2. Copy the latest commit hash (should display near the top of the page),
+#    and paste it below after `PsyNet@`
 # 3. Run `psynet generate-constraints` in the terminal
 # 4. Add `requirement.txt` and `constraints.txt` to git, then commit, then push
 # 5. Press CMD-SHIFT-P, then select `Codespaces: Rebuild Container`
-psynet@git+https://gitlab.com/PsyNetDev/PsyNet@d017187286aab7ab3bee59a9f125abc72d890616#egg=psynet
+psynet@git+https://gitlab.com/PsyNetDev/PsyNet@602052803d0426ada75beb5513a087866f399723#egg=psynet
 
 # repp@git+https://gitlab.com/computational-audition/repp@master#egg=repp
 # matplotlib
