@@ -13,7 +13,7 @@ from psynet.modular_page import (
     MultiRatingControl,
 )
 from psynet.page import InfoPage
-from psynet.timeline import Event, join
+from psynet.timeline import Event, Timeline
 from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 
 # TODO: General dashboard cleaning
@@ -28,35 +28,29 @@ from psynet.trial.static import StaticNode, StaticTrial, StaticTrialMaker
 # - each trial maker: label, expected number of trials per participant
 # - ...
 
-N_TRIALS_PER_PARTICIPANT = 6
 
-
-class Exp(psynet.experiment.Experiment):
-    label = "Subjective rating"
-
-    def get_timeline(self):
-        return join(
-            InfoPage(
-                """
-                In this experiment you will hear some sounds. Your task will be to rate
-                them on a scale of 1 to 5 on several scales.
-                """,
-                time_estimate=5,
-            ),
-            StaticTrialMaker(
-                id_="ratings",
-                trial_class=CustomTrial,
-                nodes=get_nodes,
-                expected_trials_per_participant=N_TRIALS_PER_PARTICIPANT,
-            ),
-            InfoPage(
-                """
-                Thank you for your participation!
-                """,
-                time_estimate=5,
-            ),
-        )
-
+def get_timeline():
+    return Timeline(
+        InfoPage(
+            """
+            In this experiment you will hear some sounds. Your task will be to rate
+            them on a scale of 1 to 5 on several scales.
+            """,
+            time_estimate=5,
+        ),
+        StaticTrialMaker(
+            id_="ratings",
+            trial_class=CustomTrial,
+            nodes=get_nodes,
+            expected_trials_per_participant="n_nodes",
+        ),
+        InfoPage(
+            """
+            Thank you for your participation!
+            """,
+            time_estimate=5,
+        ),
+    )
 
 class CustomTrial(StaticTrial):
     time_estimate = 10
@@ -67,7 +61,6 @@ class CustomTrial(StaticTrial):
             AudioPrompt(
                 self.assets["stimulus_audio"],
                 "Please rate the sound. You can replay it as many times as you like.",
-                controls={"Play from start": "Replay"}
             ),
             MultiRatingControl(
                 RatingScale(
@@ -88,7 +81,6 @@ class CustomTrial(StaticTrial):
             events={
                 "submitEnable": Event(is_triggered_by="promptEnd"),
             },
-            time_estimate=10,
         )
 
 def get_nodes():
@@ -103,3 +95,7 @@ def get_nodes():
         )
         for path in Path("data/instrument_sounds").glob("*.mp3")
     ]
+
+
+class Exp(psynet.experiment.Experiment):
+    timeline = get_timeline()
