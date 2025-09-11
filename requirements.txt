@@ -8,7 +8,7 @@
 # 3. Run `psynet generate-constraints` in the terminal
 # 4. Add `requirement.txt` and `constraints.txt` to git, then commit, then push
 # 5. Press CMD-SHIFT-P, then select `Codespaces: Rebuild Container`
-psynet@git+https://gitlab.com/PsyNetDev/PsyNet@00802a5ca8734df2cceaae64f0c836e8207654a3#egg=psynet
+psynet@git+https://gitlab.com/PsyNetDev/PsyNet@23432cc73b22d76fbb6899e6bdac58a536c77e35#egg=psynet
 
 # repp@git+https://gitlab.com/computational-audition/repp@master#egg=repp
 # matplotlib
