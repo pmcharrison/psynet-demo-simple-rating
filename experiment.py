@@ -61,6 +61,7 @@ class CustomTrial(StaticTrial):
             AudioPrompt(
                 self.assets["stimulus_audio"],
                 "Please rate the sound. You can replay it as many times as you like.",
+                controls="Play",
             ),
             MultiRatingControl(
                 RatingScale(
